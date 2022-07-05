@@ -1,0 +1,31 @@
+.container {
+	background-color: red;
+}
+
+#lineUpTable {
+	width: 100%;
+}
+
+td {
+	/*min-width: 100px;*/
+	height: 50px;
+}
+
+
+select {
+	background-color: red;
+}
+
+.stance-btn {
+	width: 120px;
+}
+
+.stance_outfield {
+	background-color: DarkSeaGreen;
+}
+.stance_infield {
+	background-color: DarkKhaki;
+}
+.stance_pitchcatch {
+	background-color: DarkCyan;
+}

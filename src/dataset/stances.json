@@ -1,0 +1,38 @@
+{
+	"1" : {
+		"label" : "Pitcher",
+		"class" : "stance_pitchcatch"
+	},
+	"2" : {
+		"label" : "Catcher",
+		"class" : "stance_pitchcatch"
+	},
+	"3" : {
+		"label" : "First B",
+		"class" : "stance_infield"
+	},
+	"4" : {
+		"label" : "Second B",
+		"class" : "stance_infield"
+	},
+	"5" : {
+		"label" : "Third B",
+		"class" : "stance_infield"
+	},
+	"6" : {
+		"label" : "S Stop",
+		"class" : "stance_infield"
+	},
+	"7" : {
+		"label" : "Lt Field",
+		"class" : "stance_outfield"
+	},
+	"8" : {
+		"label" : "Ct Field",
+		"class" : "stance_outfield"
+	},
+	"9" : {
+		"label" : "Rt Field",
+		"class" : "stance_outfield"
+	}
+}
