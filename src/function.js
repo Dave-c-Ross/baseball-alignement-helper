@@ -8,10 +8,9 @@ var stance = A.get(0, "/dataset/stances.json");
 
 function addPlayer(no, lastname, firstname, stance) {
 	addTableRow("ltb", [
-		'<i class="fa-solid fa-circle"></i>',
-		'-',
-		no,
-		'<div style="width: 200px;">' + lastname + ", " + firstname + '</div>',
+		'<i class="fa-solid fa-circle handle"></i>',
+		'<span class="handle">' + no + "</span>",
+		'<div class="handle" style="width: 200px;">' + lastname + ", " + firstname + '</div>',
 		createStanceList(stance),
 		createStanceList(stance),
 		createStanceList(stance),
@@ -78,8 +77,9 @@ function createStanceList(include) {
 	var g = guid();
 
 	var sel = obj("div", "dd-" + g, "dropdown");
+	//sel.setAttr("data-offset", 1000);
 	
-	var btn = sel.addObject(obj("button", "btn-" + g, "btn btn-secondary dropdown-toggle stance-btn").setValue("Stance"), true);
+	var btn = sel.addObject(obj("button", "btn-" + g, "btn dropdown-toggle stance-btn").setValue("Stance"), true);
 
 	btn.setAttrs({
 		"type" : "button",
@@ -94,14 +94,20 @@ function createStanceList(include) {
 
 	for (k in stanceObj) {
 
+		var a = list.addObject(obj("a", "a-" + g, stanceObj[k]['class'] + " dropdown-item").setValue(stanceObj[k]['label']), true);
+
 		if ($.inArray(parseInt(k), include) != -1) {
-			var a = list.addObject(obj("a", "a-" + g, stanceObj[k]['class'] + " dropdown-item").setValue(stanceObj[k]['label']), true);
 			a.addEventListener('click', function() { 
 				btn.setValue(this.getValue());
 				$(btn).removeClass(function (index, className) {
 				    return (className.match (/(^|\s)stance_\S+/g) || []).join(' ');
 				}).addClass(this.className);
 			});
+		} else {
+			$(a).removeClass(function (index, className) {
+			    return (className.match (/(^|\s)stance_\S+/g) || []).join(' ');
+			});
+			$(a).addClass("disabled");
 		}
 
 	}

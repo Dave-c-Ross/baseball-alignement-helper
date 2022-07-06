@@ -9,13 +9,6 @@
 
 		<link href="style.css" rel="stylesheet">
 
-		<style>
-			#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-			#sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
-			html>body #sortable li { height: 1.5em; line-height: 1.2em; }
-			.ui-state-highlight { height: 50px; background-color: whitesmoke; border-style: dotted;}
-		</style>
-
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 		
@@ -32,7 +25,8 @@
 			$(function() {
 				$("#ltb").sortable({
 					placeholder: "ui-state-highlight",
-					opacity: 0.8
+					opacity: 0.8,
+					handle: ".handle"
 				});
 					$("#ltb").disableSelection();
 			});
@@ -48,18 +42,19 @@
 			<div class="row">
 				<div class="col-12">
 					<table id="lineUpTable">
-						<tr>
-							<th>&nbsp;</th>
-							<th>Rang</th>
-							<th>#</th>
-							<th width="200px">Nom & Prénom</th>
-							<th>1ère</th>
-							<th>2ième</th>
-							<th>3ième</th>
-							<th>4ième</th>
-							<th>5ième</th>
-							<th>6ième</th>
-						</tr>
+						<thead>
+							<tr>
+								<th>&nbsp;</th>
+								<th>#</th>
+								<th width="200px">Nom & Prénom</th>
+								<th>1ère</th>
+								<th>2ième</th>
+								<th>3ième</th>
+								<th>4ième</th>
+								<th>5ième</th>
+								<th>6ième</th>
+							</tr>
+						</thead>
 						<tbody id="ltb">
 						</tbody>
 					</table>
