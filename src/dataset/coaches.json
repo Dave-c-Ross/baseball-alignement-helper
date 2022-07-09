@@ -1,0 +1,22 @@
+[
+	{
+		"firstname":"Daniel",
+		"lastname":"Beaulieu",
+		"number":57
+	},
+	{
+		"firstname":"David",
+		"lastname":"Bibeau",
+		"number":56
+	},
+	{
+		"firstname":"Mylene",
+		"lastname":"Ferland",
+		"number":55
+	},
+	{
+		"firstname":"David",
+		"lastname":"Cuerrier",
+		"number":59
+	}
+]

@@ -1,9 +1,21 @@
 
 
 var A = new $ajax();
-var ply = A.get(0, "/dataset/players.json");
-var stance = A.get(0, "/dataset/stances.json");
+var playerList = A.get(0, "/dataset/players.json");
+var coachList = A.get(0, "/dataset/coaches.json");
+var stanceList = A.get(0, "/dataset/stances.json");
 
+var objBBAH = new BBAH(playerList, coachList);
+init();
+
+
+function init() {
+
+	objBBAH.createNewGame("07/07/2022", 21, 10, true, "Belu", "B", "U13", "LBG");
+
+	console.log(objBBAH.getGameList());
+
+}
 
 
 function addPlayer(no, lastname, firstname, stance) {
@@ -11,19 +23,20 @@ function addPlayer(no, lastname, firstname, stance) {
 		'<i class="fa-solid fa-circle handle"></i>',
 		'<span class="handle">' + no + "</span>",
 		'<div class="handle" style="width: 200px;">' + lastname + ", " + firstname + '</div>',
-		createStanceList(stance),
-		createStanceList(stance),
-		createStanceList(stance),
-		createStanceList(stance),
-		createStanceList(stance),
-		createStanceList(stance)
-		]);
+		createStanceList(stance, 0),
+		createStanceList(stance, 1),
+		createStanceList(stance, 2),
+		createStanceList(stance, 3),
+		createStanceList(stance, 4),
+		createStanceList(stance, 5)
+		]).draggable = false;
 }
 
 function createPlayerList() {
 	//var sel = obj("select", "playerList", "form-select");
-	for (k in ply[3]) {
-		addPlayer(ply[3][k].number, ply[3][k].lastname, ply[3][k].firstname, ply[3][k].stance);
+	for (k in playerList[3]) {
+		if (playerList[3][k].enable)
+			addPlayer(playerList[3][k].number, playerList[3][k].lastname, playerList[3][k].firstname, playerList[3][k].stance);
 	}
 	
 }
@@ -40,7 +53,6 @@ function createStanceList1(include) {
 	
 	return sel;
 }
-
 function createStanceList2(include) {
 
 	var g = guid();
@@ -68,11 +80,8 @@ function createStanceList2(include) {
 	}
 
 	return sel;
-
 }
-
-
-function createStanceList(include) {
+function createStanceList3(include) {
 
 	var g = guid();
 
@@ -90,7 +99,7 @@ function createStanceList(include) {
 
 	
 	var list = sel.addObject(obj("div", undefined, "dropdown-menu").setAttr("aria-labelledby", "btn-" + g), true);
-	var stanceObj = stance[3];
+	var stanceObj = stanceList[3];
 
 	for (k in stanceObj) {
 
@@ -112,43 +121,96 @@ function createStanceList(include) {
 
 	}
 
+	$(sel).on('show.bs.dropdown', function(event) {
+		createDynamicStanceListDOMElement(event.relatedTarget.id, stanceObj, [1,2,3]);
+		console.log(event);
+	});
+
+	return sel;
+}
+
+
+
+function createStanceList(include, inningIndex) {
+
+	var g = guid();
+
+	var sel = obj("div", "dd-" + g, "dropdown");
+	//sel.setAttr("data-offset", 1000);
+	
+	var btn = sel.addObject(obj("button", "btn-" + g, "btn dropdown-toggle stance-btn").setValue("Stance"), true);
+
+	btn.setAttrs({
+		"type" : "button",
+		"data-toggle" : "dropdown",
+		"aria-expanded" : "false"
+	});
+	
+	var list = sel.addObject(obj("div", undefined, "dropdown-menu").setAttr("aria-labelledby", "btn-" + g), true);
+
+
+	$(sel).on('show.bs.dropdown', function(event) {
+
+		var av = objBBAH.gameList[0].innings[inningIndex].getAvailableStances();
+		var sl = {};
+
+		for (z in av) {
+			sl[av[z]] = stanceList[3][av[z]];
+		}
+
+		createDynamicStanceListDOMElement(list, sl, include, inningIndex);
+	});
+
+	$(sel).on('hidden.bs.dropdown', function(event) {
+		list.clear();
+	});
+
 	return sel;
 
 }
 
-/*
-
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>
 
 
-<div class="dropdown">
-	<button id="btn-27a3a266-d743-78d3-c227-5f37b3d26e60" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		Drop
-	</button>
-	<div class="dropdown-menu" aria-labelledby="btn-27a3a266-d743-78d3-c227-5f37b3d26e60">
-		<a href="#" class="dropdown-item">Lanceur</a>
-		<a href="#" class="dropdown-item">Receveur</a>
-		<a href="#" class="dropdown-item">1ier but</a>
-		<a href="#" class="dropdown-item">2ieme but</a>
-		<a href="#" class="dropdown-item">3ieme but</a>
-		<a href="#" class="dropdown-item">Arr Court</a>
-		<a href="#" class="dropdown-item">C. Gauche</a>
-		<a href="#" class="dropdown-item">C. Centre</a>
-		<a href="#" class="dropdown-item">C. Droit</a>
-	</div>
-</div>
+function createDynamicStanceListDOMElement(dropDownTarget, stanceListObj, includeStanceArray, inningIndex) {
 
-*/
+	dropDownTarget.clear();
+	var sBtn = $id(dropDownTarget.getAttribute("aria-labelledby"));
+	console.log(sBtn);
 
+	for (k in stanceListObj) {
+
+		var a = dropDownTarget.addObject(obj("a", "a-stance-" + k, stanceListObj[k]['class'] + " dropdown-item").setValue(stanceListObj[k]['label']).setAttr("data-pos", k), true);
+
+		if ($.inArray(parseInt(k), includeStanceArray) != -1) {
+			
+			a.addEventListener('click', function() { 
+				
+				sBtn.setValue(this.getValue());
+
+				console.log(objBBAH);
+				console.log("Remove " + this.getAttribute("data-pos"));
+				objBBAH.gameList[0].innings[inningIndex].setStanceUnAvailable(this.getAttribute("data-pos"));
+
+				$(sBtn).removeClass(function (index, className) {
+				    return (className.match (/(^|\s)stance_\S+/g) || []).join(' ');
+				}).addClass(this.className);
+
+			});
+
+		} else {
+			
+			$(a).removeClass(function (index, className) {
+			    return (className.match (/(^|\s)stance_\S+/g) || []).join(' ');
+			});
+			$(a).addClass("disabled");
+
+		}
+
+	}
+
+	console.log(dropDownTarget);
+
+}
 
 
 

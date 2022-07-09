@@ -43,6 +43,74 @@ function $id(id) {
   return document.getElementById(id);
 }
 
+function $id2(id) {
+
+	var d = $id(id);
+
+	d.addTo = function(parent) {
+		if (is_string(parent)) {
+			$id(parent).appendChild(this);
+		} else {
+			parent.appendChild(this);
+		}
+		return this;
+	}
+	
+	d.addObject = function(xObj, retNewObj) {
+		this.appendChild(xObj);
+
+		if (retNewObj)
+			return xObj;
+
+		return this;
+	}
+	
+	d.setValue = function(text) {
+		this.innerHTML  = text;
+		return this;
+	}
+
+	d.getValue = function() {
+		return this.innerText;
+	}
+	
+	d.setAttr = function(name, value) {
+		this.setAttribute(name, value);
+		return this;
+	}
+
+	d.setAttrs = function(jsonObj) {
+		for (j in jsonObj) {
+			this.setAttribute(j, jsonObj[j]);
+		}
+		return this;
+	}
+	
+	d.setStyle = function(name, value) {
+		eval('this.style.' + name + " = \"" + value + "\"");
+		return this;
+	}
+	
+	d.clear = function() {
+        
+        var first = this.firstElementChild;
+        while (first) {
+            first.remove();
+            first = this.firstElementChild;
+        }
+
+		return this;
+	}
+
+	d.destroy = function() {
+		this.parentNode.removeChild(this);
+		return this;
+	}
+
+	return d;
+
+}
+
 /*	Function $name()
 	Get objects by name
 	return: an object
@@ -142,6 +210,17 @@ function obj(type, id, className) {
 	
 	d.setStyle = function(name, value) {
 		eval('this.style.' + name + " = \"" + value + "\"");
+		return this;
+	}
+
+	d.clear = function() {
+        
+        var first = this.firstElementChild;
+        while (first) {
+            first.remove();
+            first = this.firstElementChild;
+        }
+
 		return this;
 	}
 	
@@ -405,6 +484,14 @@ function tryParseJSON(text) {
 		return null;
 	}
 
+}
+
+function arrayRemove(arr, value) { 
+	const index = arr.indexOf(value);
+	if (index > -1) { // only splice array when item is found
+	  arr.splice(index, 1); // 2nd parameter means remove one item only
+	}
+	return arr;
 }
 
 // End
