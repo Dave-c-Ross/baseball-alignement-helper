@@ -1,0 +1,64 @@
+body {
+	background-color: #333;
+	color:  white;
+}
+
+.handle {
+	cursor: -webkit-grab; cursor: grab;
+}
+
+.container {
+	/*background-color: red;*/
+}
+
+/*#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }*/
+/*#sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }*/
+/*html>body #sortable li { height: 1.5em; line-height: 1.2em; }*/
+.ui-state-highlight { height: 50px; background-color: #222; border: none; }
+
+#lineUpTable {
+	width: 100%;
+}
+
+#ltb {}
+
+#rtb {
+	background-color: #555;
+	border-top: dotted 2px lightgray;
+}
+
+td {
+	/*min-width: 100px;*/
+	height: 50px;
+	border-collapse: collapse;
+}
+
+th {
+	text-align: center;
+}
+
+
+select {
+	background-color: red;
+}
+
+.stance-btn {
+	width: 120px;
+	color:  white;
+}
+
+.stance_outfield {
+	background-color: #49d049 !important;
+}
+.stance_infield {
+	background-color: #ffc61a !important;
+}
+.stance_pitchcatch {
+	background-color: #66ccff !important;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
