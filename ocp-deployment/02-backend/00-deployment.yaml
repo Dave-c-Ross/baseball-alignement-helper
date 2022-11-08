@@ -1,0 +1,37 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: baseball-backend
+  namespace: baseball-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: baseball-backend
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: baseball-backend
+    spec:
+      containers:
+        - name: container
+          image: 'daveross0/baseball-helper-backend:1.1'
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          env: []
+          # command: ["npm start"]
+          # args: ["HOSTNAME", "KUBERNETES_PORT"]
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
