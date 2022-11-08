@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: baseball-frontend-service
+  namespace: baseball-app
+  labels:
+    app: baseball-app
+    app.kubernetes.io/part-of: baseball-app
+spec:
+  selector:
+    app: baseball-frontend
+  ports:
+    - protocol: TCP
+      name: 80-tcp
+      port: 80
+      targetPort: 80
+
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: baseball-frontend-route
+  namespace: baseball-app
+  labels:
+    app: baseball-app
+    app.kubernetes.io/component: baseball-helper-frontend
+    app.kubernetes.io/instance: baseball-helper-frontend
+    app.kubernetes.io/name: baseball-helper-frontend
+    app.kubernetes.io/part-of: baseball-app
+  annotations:
+    haproxy.router.openshift.io/rewrite-target: /
+spec:
+  host: baseball.apps.wingman.sandbox385.opentlc.com
+  path: /
+  to:
+    kind: Service
+    name: baseball-frontend-service
+    weight: 100
+  port:
+    targetPort: 80-tcp
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+

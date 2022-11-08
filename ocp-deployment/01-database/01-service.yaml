@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: mongo-service
   namespace: baseball-app
+  labels:
+    app: baseball-app
+    app.kubernetes.io/part-of: baseball-app
 spec:
   selector:
     app: mongo

@@ -3,6 +3,9 @@ apiVersion: apps/v1
 metadata:
   name: baseball-backend
   namespace: baseball-app
+  labels:
+    app: baseball-app
+    app.kubernetes.io/part-of: baseball-app
 spec:
   replicas: 1
   selector:

@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: baseball-backend-service
   namespace: baseball-app
+  labels:
+    app: baseball-app
+    app.kubernetes.io/part-of: baseball-app
 spec:
   selector:
     app: baseball-backend
@@ -19,11 +22,11 @@ metadata:
   name: baseball-backend-route
   namespace: baseball-app
   labels:
-    app: baseball-helper-backend
+    app: baseball-app
+    app.kubernetes.io/part-of: baseball-app
     app.kubernetes.io/component: baseball-helper-backend
     app.kubernetes.io/instance: baseball-helper-backend
     app.kubernetes.io/name: baseball-helper-backend
-    app.kubernetes.io/part-of: baseball-helper-backend-app
   annotations:
     haproxy.router.openshift.io/rewrite-target: /
 spec:

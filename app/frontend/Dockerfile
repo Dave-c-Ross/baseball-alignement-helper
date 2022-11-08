@@ -1,3 +1,6 @@
-FROM php:8.1.7-apache
+FROM registry.redhat.io/ubi8/php-80
 
-COPY ./src /var/www/html/
+ADD ./src .
+
+ENV ERROR_REPORTING "E_ALL"
+ENV DISPLAY_ERRORS "OFF"

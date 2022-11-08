@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: mongo
+    app: baseball-app
+    app.kubernetes.io/part-of: baseball-app
     app.kubernetes.io/component: mongo
     app.kubernetes.io/instance: mongo
     app.kubernetes.io/name: mongo
-    app.kubernetes.io/part-of: mongo-app
     app.openshift.io/runtime: mongodb
     app.openshift.io/runtime-namespace: test-app
   name: mongo
