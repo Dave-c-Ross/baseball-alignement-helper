@@ -2,7 +2,7 @@
 
 var A = new $ajax();
 //var playerList = A.get(0, "/dataset/players.json");
-var playerList = A.get(0, "http://localhost:3000/players");
+var playerList = A.get(0, "https://baseball.apps.wingman.sandbox385.opentlc.com/api/v1/players");
 var coachList = A.get(0, "/dataset/coaches.json");
 var stanceList = A.get(0, "/dataset/stances.json");
 

@@ -24,9 +24,11 @@ metadata:
     app.kubernetes.io/instance: baseball-helper-backend
     app.kubernetes.io/name: baseball-helper-backend
     app.kubernetes.io/part-of: baseball-helper-backend-app
+  annotations:
+    haproxy.router.openshift.io/rewrite-target: /
 spec:
   host: baseball.apps.wingman.sandbox385.opentlc.com
-  path: /api/v1/
+  path: /api/v1
   to:
     kind: Service
     name: baseball-backend-service
@@ -34,6 +36,7 @@ spec:
   port:
     targetPort: 3000-tcp
   tls:
-    termination: reencrypt
+    termination: edge
     insecureEdgeTerminationPolicy: Redirect
   wildcardPolicy: None
+
