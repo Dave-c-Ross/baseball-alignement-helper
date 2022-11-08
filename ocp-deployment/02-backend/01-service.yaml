@@ -8,5 +8,32 @@ spec:
     app: baseball-backend
   ports:
     - protocol: TCP
+      name: 3000-tcp
       port: 3000
       targetPort: 3000
+
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: baseball-backend-route
+  namespace: baseball-app
+  labels:
+    app: baseball-helper-backend
+    app.kubernetes.io/component: baseball-helper-backend
+    app.kubernetes.io/instance: baseball-helper-backend
+    app.kubernetes.io/name: baseball-helper-backend
+    app.kubernetes.io/part-of: baseball-helper-backend-app
+spec:
+  host: baseball.apps.wingman.sandbox385.opentlc.com
+  path: /api/v1/
+  to:
+    kind: Service
+    name: baseball-backend-service
+    weight: 100
+  port:
+    targetPort: 3000-tcp
+  tls:
+    termination: reencrypt
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: container
-          image: 'daveross0/baseball-helper-backend:1.1'
+          image: 'daveross0/baseball-helper-backend:1.2'
           ports:
             - containerPort: 3000
               protocol: TCP
