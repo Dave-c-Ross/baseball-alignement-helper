@@ -78,7 +78,7 @@ const Team = mongoose.model('Team', teamSchema);
 const Game = mongoose.model('Game', gameSchema);
 
 async function init() {
-	await mongoose.connect('mongodb://localhost:27017/test');
+	await mongoose.connect('mongodb://mongo-service:27017/test');
 }
 
 async function upsertPlayer(lastname, firstname, number, stance, substitute, enable) {
